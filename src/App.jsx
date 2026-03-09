@@ -9,7 +9,7 @@ import SignUp from './pages/SignUp.jsx';
 // import VerifyCode from './pages/VerifyCode';
 import Explore from './pages/Explore';
 // import MarketStatsPage from './pages/MarketStatsPage';
-import LearnPage from './pages/Learn.jsx';
+import Learn from './pages/Learn.jsx';
 // import CryptoBasicsPage from './pages/CryptoBasicsPage';
 import Loader from './components/common/Loader.jsx';
 
@@ -35,7 +35,7 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
             {/*<Route path="/forgot-password" element={<ForgotPassword />} />*/}
             {/*<Route path="/verify" element={<VerifyCode />} />*/}
-            <Route path="/learn" element={<LearnPage />} />
+            <Route path="/learn" element={<Learn />} />
             {/*<Route path="/learn/crypto-basics" element={<CryptoBasicsPage />} />*/}
         </Routes>
     )
