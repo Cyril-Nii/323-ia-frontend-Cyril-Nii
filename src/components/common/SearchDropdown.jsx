@@ -213,25 +213,25 @@ const SearchDropdown = ({ query }) => {
     const [ghsRate, setGhsRate]     = useState(15.5);
 
     useEffect(() => {
-        let cancelled = false;
-        async function fetchData() {
-            try {
-                const [tickerRes, fxRes] = await Promise.all([
-                    fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${JSON.stringify(BINANCE_SYMBOLS)}`),
-                    fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json'),
-                ]);
-                const [tickers, fx] = await Promise.all([tickerRes.json(), fxRes.json()]);
-                if (cancelled) return;
-                const map = {};
-                tickers.forEach(t => {
-                    map[t.symbol] = { price: parseFloat(t.lastPrice), change: parseFloat(t.priceChangePercent), vol: parseFloat(t.quoteVolume) };
-                });
-                setPrices(map);
-                setGhsRate(fx?.usd?.ghs ?? 15.5);
-            } catch { /* use defaults */ }
-        }
-        fetchData();
-        return () => { cancelled = true; };
+        // Use static mock prices (no external API calls)
+        const mockPrices = {
+            'BTCUSDT': { price: 50000, change: -0.99, vol: 26700000000 },
+            'ETHUSDT': { price: 3000, change: -1.70, vol: 13100000000 },
+            'BNBUSDT': { price: 350, change: 2.15, vol: 1200000000 },
+            'XRPUSDT': { price: 0.65, change: -0.35, vol: 1400000000 },
+            'USDCUSDT': { price: 1.0, change: 0, vol: 5200000000 },
+            'SOLUSDT': { price: 100, change: 3.21, vol: 2200000000 },
+            'TRXUSDT': { price: 0.10, change: 1.05, vol: 383000000 },
+            'ADAUSDT': { price: 0.45, change: 1.42, vol: 531000000 },
+            'DOTUSDT': { price: 7.20, change: -0.85, vol: 102600 },
+            'LTCUSDT': { price: 85, change: 0.75, vol: 92400 },
+            'SHIBUSDT': { price: 0.000015, change: 4.2, vol: 178900 },
+            'PEPEUSDT': { price: 0.0000008, change: -2.1, vol: 1200000 },
+            'SUIUSDT': { price: 1.85, change: 5.3, vol: 577300 },
+            'PAXGUSDT': { price: 2800, change: 0.12, vol: 1900000 },
+        };
+        setPrices(mockPrices);
+        setGhsRate(15.5); // Use static fallback rate
     }, []);
 
     const content = useMemo(() => {

@@ -275,41 +275,27 @@ const Explore = () => {
         return fxRates.current[currency] ?? FALLBACK_GHS;
     }, [currency]);
 
-    /* ── Fetch FX rates once ── */
+
     useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data?.usd) fxRates.current = data.usd;
-                }
-            } catch { /* keep defaults */ }
-        })();
+        // Initialize with fallback rates - no external API calls
+        fxRates.current = { ghs: FALLBACK_GHS };
     }, []);
 
-    /* ── Fetch from Binance (same as CryptoTable) ── */
+
     const fetchPrices = useCallback(async () => {
-        try {
-            const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${BINANCE_SYMBOLS}`);
-            if (!res.ok) throw new Error(`Binance ${res.status}`);
-            return await res.json();
-        } catch (error) {
-            console.warn('Binance fetch failed, using fallback data:', error);
-            // Fallback mock data structure derived from COIN_META
-            return COIN_META.map((meta, i) => {
-                // Deterministic mock values based on index to look realistic
-                const basePrice = FALLBACK_PRICE_SEED[i % FALLBACK_PRICE_SEED.length];
-                const lastPrice = (basePrice * (1 + (Math.sin(i) * 0.05))).toFixed(4);
-                const priceChangePercent = (Math.sin(i * 1.5) * 5).toFixed(2);
-                return {
-                    symbol: meta.binance,
-                    lastPrice,
-                    priceChangePercent,
-                    quoteVolume: (Math.abs(Math.cos(i)) * 1000000000 + 100000000).toFixed(2),
-                };
-            });
-        }
+        // Return fallback mock data structure derived from COIN_META (no external API calls)
+        return COIN_META.map((meta, i) => {
+            // Deterministic mock values based on index to look realistic
+            const basePrice = FALLBACK_PRICE_SEED[i % FALLBACK_PRICE_SEED.length];
+            const lastPrice = (basePrice * (1 + (Math.sin(i) * 0.05))).toFixed(4);
+            const priceChangePercent = (Math.sin(i * 1.5) * 5).toFixed(2);
+            return {
+                symbol: meta.binance,
+                lastPrice,
+                priceChangePercent,
+                quoteVolume: (Math.abs(Math.cos(i)) * 1000000000 + 100000000).toFixed(2),
+            };
+        });
     }, []);
 
     const buildCoins = useCallback((tickers) => {

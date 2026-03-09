@@ -4,6 +4,9 @@ const tabs = ['Tradable', 'Top gainers', 'New on Coinbase'];
 const POLL_MS = 3000;
 const FALLBACK_GHS = 16.5;
 
+// Mock price seed values for realistic-looking prices
+const FALLBACK_PRICE_SEED = [50000, 3000, 350, 100, 0.65, 0.45, 0.08, 7.2, 85, 35, 15, 8, 12, 0.12, 25, 180, 0.25, 6, 0.10, 1.5, 2800, 95, 70, 2.5, 0.35, 0.05, 15, 8, 0.000015, 0.75];
+
 /* ── Coin list (order = "Tradable" ranking) ── */
 const COIN_META = [
     { binance: 'BTCUSDT',   name: 'Bitcoin',         symbol: 'BTC'   },
@@ -214,33 +217,32 @@ const CryptoTable = () => {
         });
     }, []);
 
-    /* ── Fetch from Binance ── */
+    /* ── Use mock data only (no live API) ── */
     const fetchPrices = useCallback(async () => {
-        const res = await fetch(
-            `https://api.binance.com/api/v3/ticker/24hr?symbols=${BINANCE_SYMBOLS}`
-        );
-        if (!res.ok) throw new Error(`Binance ${res.status}`);
-        return res.json();
+        // Return fallback mock data structure derived from COIN_META
+        return COIN_META.map((meta, i) => {
+            const basePrice = FALLBACK_PRICE_SEED[i % FALLBACK_PRICE_SEED.length];
+            const lastPrice = (basePrice * (1 + (Math.sin(i) * 0.05))).toFixed(4);
+            const priceChangePercent = (Math.sin(i * 1.5) * 5).toFixed(2);
+            return {
+                symbol: meta.binance,
+                lastPrice,
+                priceChangePercent,
+                quoteVolume: (Math.abs(Math.cos(i)) * 1000000000 + 100000000).toFixed(2),
+            };
+        });
     }, []);
 
-    /* ── Initial load: prices + GHS rate ── */
+    /* ── Initial load: prices + GHS rate (using mock data) ── */
     useEffect(() => {
         let cancelled = false;
 
         (async () => {
             try {
-                const [tickers, fxRes] = await Promise.all([
-                    fetchPrices(),
-                    fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json')
-                        .catch(() => null),
-                ]);
+                const tickers = await fetchPrices();
 
-                if (fxRes?.ok) {
-                    try {
-                        const fx = await fxRes.json();
-                        ghsRate.current = fx?.usd?.ghs ?? FALLBACK_GHS;
-                    } catch { /* keep fallback */ }
-                }
+                // Use fallback GHS rate (no external API)
+                ghsRate.current = FALLBACK_GHS;
 
                 if (!cancelled) {
                     applyTickers(tickers);
