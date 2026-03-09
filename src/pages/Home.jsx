@@ -8,7 +8,7 @@ import BaseAppSection from '../components/sections/BaseAppSection.jsx';
 import LearnSection from '../components/sections/LearnSection.jsx';
 import TakeControlSection from '../components/sections/TakeControlSection.jsx';
 
-export const Home = () => {
+const Home = () => {
 
     useDocumentTitle('Coinbase - Buy and Sell Bitcoin, Ethereum, and more with trust');
 
@@ -29,3 +29,5 @@ export const Home = () => {
 
     )
 }
+
+export default Home;
