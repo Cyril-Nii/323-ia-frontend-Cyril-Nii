@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Home from "./pages/Home.jsx";
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
-// import AccountTypeSelect from './pages/AccountTypeSelect';
+import AccountTypeSelect from './pages/AccountTypeSelect.jsx';
 // import ForgotPassword from './pages/ForgotPassword';
 // import VerifyCode from './pages/VerifyCode';
 import Explore from './pages/Explore';
@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/explore" element={<Explore />} />
             <Route path="/market-stats" element={<MarketStats />} />
             <Route path="/signin" element={<SignIn />} />
-            {/*<Route path="/account-type" element={<AccountTypeSelect />} />*/}
+            <Route path="/account-type" element={<AccountTypeSelect />} />
             <Route path="/signup" element={<SignUp />} />
             {/*<Route path="/forgot-password" element={<ForgotPassword />} />*/}
             {/*<Route path="/verify" element={<VerifyCode />} />*/}
