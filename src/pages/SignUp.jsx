@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/common/Logo.jsx';
 import {
     SignUpShell,
@@ -160,8 +160,8 @@ const AllSetStep = ({ onContinue }) => (
             </svg>
         </div>
         <h2 className="text-2xl font-bold mb-2 text-white text-center">You're all set</h2>
-        <p className="text-gray-400 mb-8 text-center">Your ID has been verified, you can continue.</p>
-        <BlueButton onClick={onContinue}>Continue</BlueButton>
+        <p className="text-gray-400 mb-8 text-center">Your account has been verified successfully.</p>
+        <BlueButton onClick={onContinue}>Go to Homepage</BlueButton>
     </div>
 );
 
@@ -485,31 +485,42 @@ const StepUpload = ({ onNext, onBack }) => {
     );
 };
 
-const StepVerifying = () => (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-        <div className="px-6 pt-5">
-            <a href="/"><Logo height={28} className="brightness-0 invert" /></a>
-        </div>
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-            <div className="w-28 h-28 rounded-full bg-blue-60 flex items-center justify-center mb-8 animate-pulse">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <rect x="12" y="6" width="24" height="32" rx="2" fill="white" fillOpacity="0.9" />
-                    <line x1="16" y1="14" x2="32" y2="14" stroke="#0052FF" strokeWidth="1.5" />
-                    <line x1="16" y1="18" x2="32" y2="18" stroke="#0052FF" strokeWidth="1.5" />
-                    <line x1="16" y1="22" x2="32" y2="22" stroke="#0052FF" strokeWidth="1.5" />
-                    <line x1="16" y1="26" x2="28" y2="26" stroke="#0052FF" strokeWidth="1.5" />
-                    <circle cx="18" cy="32" r="1.5" fill="#0052FF" />
-                    <circle cx="22" cy="32" r="1.5" fill="#0052FF" />
-                    <circle cx="26" cy="32" r="1.5" fill="#0052FF" />
-                </svg>
+const StepVerifying = ({ onComplete }) => {
+    useEffect(() => {
+        // Simulate verification taking 2 seconds, then move to next step
+        const timer = setTimeout(() => {
+            onComplete();
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, [onComplete]);
+
+    return (
+        <div className="min-h-screen bg-gray-100 flex flex-col">
+            <div className="px-6 pt-5">
+                <a href="/"><Logo height={28} className="brightness-0 invert" /></a>
             </div>
-            <h1 className="text-[1.75rem] font-bold text-white mb-3">Verifying your identity</h1>
-            <p className="text-[0.9375rem] text-[#8A919E]">This should only take a minute.</p>
+            <div className="flex-1 flex flex-col items-center justify-center px-4">
+                <div className="w-28 h-28 rounded-full bg-blue-60 flex items-center justify-center mb-8 animate-pulse">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <rect x="12" y="6" width="24" height="32" rx="2" fill="white" fillOpacity="0.9" />
+                        <line x1="16" y1="14" x2="32" y2="14" stroke="#0052FF" strokeWidth="1.5" />
+                        <line x1="16" y1="18" x2="32" y2="18" stroke="#0052FF" strokeWidth="1.5" />
+                        <line x1="16" y1="22" x2="32" y2="22" stroke="#0052FF" strokeWidth="1.5" />
+                        <line x1="16" y1="26" x2="28" y2="26" stroke="#0052FF" strokeWidth="1.5" />
+                        <circle cx="18" cy="32" r="1.5" fill="#0052FF" />
+                        <circle cx="22" cy="32" r="1.5" fill="#0052FF" />
+                        <circle cx="26" cy="32" r="1.5" fill="#0052FF" />
+                    </svg>
+                </div>
+                <h1 className="text-[1.75rem] font-bold text-white mb-3">Verifying your identity</h1>
+                <p className="text-[0.9375rem] text-[#8A919E]">This should only take a minute.</p>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [step, setStep] = useState(0);
     const [email, setEmail] = useState('');
     const [citizenship, setCitizenship] = useState('GH');
@@ -520,6 +531,7 @@ const SignUp = () => {
 
     const next = () => setStep((s) => s + 1);
     const back = () => setStep((s) => Math.max(0, s - 1));
+    const goHome = () => navigate('/', { state: { signedUp: true, email } });
 
     switch (step) {
         case 0: return <StepEmail email={email} setEmail={setEmail} onNext={next} />;
@@ -530,13 +542,13 @@ const SignUp = () => {
         case 5: return <StepBirth city={birthCity} setCity={setBirthCity} country={birthCountry} setCountry={setBirthCountry} onNext={next} />;
         case 6: return <StepIdType onSelect={() => next()} />;
         case 7: return <StepUpload onNext={next} onBack={back} />;
-        case 8: return <StepVerifying />;
-        case 9: return <AllSetStep onContinue={next} />;
+        case 8: return <StepVerifying onComplete={next} />;
+        case 9: return <AllSetStep onContinue={goHome} />;
         case 10: return <VerifyAddressStep onNext={next} onFile={(file) => { setAddressFile(file); setStep(11); }} />;
         case 11: return <PreviewAddressStep file={addressFile} onConfirm={() => setStep(12)} onReupload={() => setStep(10)} />;
         case 12: return <VerifyingAddressStep />;
         case 13: return <AddressFailStep onRetry={() => setStep(10)} />;
-        default: return <StepVerifying />;
+        default: return <StepVerifying onComplete={next} />;
     }
 };
 
