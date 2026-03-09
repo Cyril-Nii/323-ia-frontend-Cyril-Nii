@@ -70,8 +70,7 @@ const SignIn = () => {
 
     const handlePasswordContinue = (e) => {
         e.preventDefault();
-        // No backend — navigate to verify code page
-        navigate('/verify', { state: { email } });
+        navigate('/', { state: { signedIn: true, email } });
     };
 
     return (
@@ -180,16 +179,6 @@ const SignIn = () => {
                                 </div>
                             </div>
 
-                            {/* Forgot password */}
-                            <div className="mb-6">
-                                <Link
-                                    to="/forgot-password"
-                                    state={{ email }}
-                                    className="text-[0.875rem] text-blue-60 hover:underline font-medium"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </div>
 
                             {/* Continue button */}
                             <button
