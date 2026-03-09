@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import {Home} from "./pages/Home.jsx";
-// import SignIn from './pages/SignIn.jsx';
+import SignIn from './pages/SignIn.jsx';
 // import SignUp from './pages/SignUp.jsx';
 // import AccountTypeSelect from './pages/AccountTypeSelect';
 // import ForgotPassword from './pages/ForgotPassword';
@@ -30,7 +30,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {/*<Route path="/explore" element={<ExplorePage />} />*/}
             {/*<Route path="/market-stats" element={<MarketStatsPage />} />*/}
-            {/*<Route path="/signin" element={<SignIn />} />*/}
+            <Route path="/signin" element={<SignIn />} />
             {/*<Route path="/account-type" element={<AccountTypeSelect />} />*/}
             {/*<Route path="/signup" element={<SignUp />} />*/}
             {/*<Route path="/forgot-password" element={<ForgotPassword />} />*/}
