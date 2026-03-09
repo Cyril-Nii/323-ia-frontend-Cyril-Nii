@@ -8,9 +8,9 @@ import SignUp from './pages/SignUp.jsx';
 // import ForgotPassword from './pages/ForgotPassword';
 // import VerifyCode from './pages/VerifyCode';
 import Explore from './pages/Explore';
-// import MarketStatsPage from './pages/MarketStatsPage';
+import MarketStats from './pages/MarketStats.jsx';
 import Learn from './pages/Learn.jsx';
-// import CryptoBasicsPage from './pages/CryptoBasicsPage';
+import CryptoBasics from './pages/CryptoBasics.jsx';
 import Loader from './components/common/Loader.jsx';
 
 
@@ -29,14 +29,14 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
-            {/*<Route path="/market-stats" element={<MarketStatsPage />} />*/}
+            <Route path="/market-stats" element={<MarketStats />} />
             <Route path="/signin" element={<SignIn />} />
             {/*<Route path="/account-type" element={<AccountTypeSelect />} />*/}
             <Route path="/signup" element={<SignUp />} />
             {/*<Route path="/forgot-password" element={<ForgotPassword />} />*/}
             {/*<Route path="/verify" element={<VerifyCode />} />*/}
             <Route path="/learn" element={<Learn />} />
-            {/*<Route path="/learn/crypto-basics" element={<CryptoBasicsPage />} />*/}
+            <Route path="/learn/crypto-basics" element={<CryptoBasics />} />
         </Routes>
     )
 }
