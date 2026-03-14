@@ -97,3 +97,15 @@ Visit [coinbase.com](https://www.coinbase.com/)
 ## 🌐 Deployment on Netlify
 
 You must deploy your completed project on **Netlify**.
+
+
+
+> **⚠️ DISCLAIMER: STRICTLY EDUCATIONAL PROJECT ⚠️**
+> 
+> This repository and its deployed counterpart are part of an assignment and is created **strictly for educational and demonstration purposes**. 
+> 
+> **This is NOT the official Coinbase website.** This project is not affiliated with, endorsed by, sponsored by, or connected to Coinbase or any of its subsidiaries. 
+> 
+> * No real financial transactions occur on this site.
+> * There is no real backend database storing user data.
+> * **DO NOT** enter any real credentials, passwords, or financial information into this application.
