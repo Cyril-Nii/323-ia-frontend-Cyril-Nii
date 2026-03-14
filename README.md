@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fcRde9Vj)
 # Coinbase Clone - React & Tailwind CSS Assignment
 
 ## 📋 Overview
@@ -98,3 +97,15 @@ Visit [coinbase.com](https://www.coinbase.com/)
 ## 🌐 Deployment on Netlify
 
 You must deploy your completed project on **Netlify**.
+
+
+
+> **⚠️ DISCLAIMER: STRICTLY EDUCATIONAL PROJECT ⚠️**
+> 
+> This repository and its deployed counterpart are part of an assignment and is created **strictly for educational and demonstration purposes**. 
+> 
+> **This is NOT the official Coinbase website.** This project is not affiliated with, endorsed by, sponsored by, or connected to Coinbase or any of its subsidiaries. 
+> 
+> * No real financial transactions occur on this site.
+> * There is no real backend database storing user data.
+> * **DO NOT** enter any real credentials, passwords, or financial information into this application.
