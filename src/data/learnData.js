@@ -206,7 +206,7 @@ export const learnSectionContent = {
 export const learnSectionArticles = [
     {
         id: 1,
-        href: 'https://www.coinbase.com/usdc',
+        href: '#',
         title: 'USDC: The digital dollar for the global crypto economy',
         description:
             'Coinbase believes crypto will be part of the solution for creating an open financial system that is both more efficient and more equitable. We co-founded the Centre Consortium in 2018 to invest in the build of USDC, and since then it has become the second largest stablecoin by market capitalization.',
@@ -216,7 +216,7 @@ export const learnSectionArticles = [
     },
     {
         id: 2,
-        href: 'https://www.coinbase.com/learn/crypto-basics/can-crypto-really-replace-your-bank',
+        href: '#',
         title: 'Can crypto really replace your bank account?',
         description:
             'If you\'re a big enough fan of crypto, you\'ve probably heard the phrase "be your own bank" or the term "bankless" -- the idea being that crypto can offer more control over your financial future than traditional finance. But how much of your financial life really can be accomplished via crypto?',
@@ -226,7 +226,7 @@ export const learnSectionArticles = [
     },
     {
         id: 3,
-        href: 'https://www.coinbase.com/learn/tips-and-tutorials/dollar-cost-averaging',
+        href: '#',
         title: 'When is the best time to invest in crypto?',
         description:
             'Cryptocurrencies like Bitcoin can experience daily (or even hourly) price volatility. As with any kind of investment, volatility may cause uncertainty, fear of missing out, or fear of participating at all. When prices are fluctuating, how do you know when to buy?',

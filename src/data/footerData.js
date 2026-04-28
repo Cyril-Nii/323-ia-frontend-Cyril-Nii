@@ -145,9 +145,9 @@ export const FOOTER_COLUMNS = [
 ];
 
 export const FOOTER_SOCIALS = [
-    { label: 'X', href: 'https://x.com/coinbase', icon: 'https://static-assets.coinbase.com/marketing/cdx/x-light.svg' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/coinbase', icon: 'https://static-assets.coinbase.com/marketing/cdx/linkedin-light.svg' },
-    { label: 'Instagram', href: 'https://www.instagram.com/coinbase/', icon: 'https://static-assets.coinbase.com/marketing/cdx/instagram-light.svg' },
-    { label: 'TikTok', href: 'https://www.tiktok.com/@coinbase', icon: 'https://static-assets.coinbase.com/marketing/cdx/tiktok-light.svg' },
+    { label: 'X', href: '#', icon: 'https://static-assets.coinbase.com/marketing/cdx/x-light.svg' },
+    { label: 'LinkedIn', href: '#', icon: 'https://static-assets.coinbase.com/marketing/cdx/linkedin-light.svg' },
+    { label: 'Instagram', href: '#', icon: 'https://static-assets.coinbase.com/marketing/cdx/instagram-light.svg' },
+    { label: 'TikTok', href: '#', icon: 'https://static-assets.coinbase.com/marketing/cdx/tiktok-light.svg' },
 ];
 
