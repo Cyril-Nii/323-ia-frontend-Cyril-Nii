@@ -69,35 +69,35 @@
 /* TYPOGRAPHY UTILITY CLASSES */
 
 @utility text-display-1 {
-    font-size: 5rem;
-    line-height: 5rem;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.05;
     font-weight: 400;
     letter-spacing: -0.02em;
 }
 
 @utility text-display-2 {
-    font-size: 4rem;
-    line-height: 4rem;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
     font-weight: 400;
     letter-spacing: -0.02em;
 }
 
 @utility text-display-3 {
-    font-size: 3rem;
-    line-height: 3rem;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 1.15;
     font-weight: 400;
     letter-spacing: -0.01em;
 }
 
 @utility text-title-1 {
-    font-size: 2rem;
-    line-height: 2rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
     font-weight: 600;
 }
 
 @utility text-title-3 {
-    font-size: 2rem;
-    line-height: 2rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
     font-weight: 600;
 }
 
