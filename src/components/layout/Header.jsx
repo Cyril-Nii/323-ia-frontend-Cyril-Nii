@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { AnimatePresence } from 'motion/react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'motion/react';
+import { useAuth } from '../../context/AuthContext.jsx';
 import Logo from '../common/Logo.jsx';
 import Container from '../common/Container.jsx';
 import { NavDropdown, NavMenuItem, NavSectionHeader, NavFeatured } from './navbar-menu.jsx';
@@ -52,14 +53,13 @@ const MENUS = {
         cols: [
             [
                 { icon: <BuySellIcon />,    title: 'Buy and sell',     desc: 'Buy, sell, and use crypto',                     href: '#' },
-                { icon: <AppIcon />,        title: 'Base App',         desc: 'Post, earn, trade, and chat, all in one place', href: 'https://join.base.app/' },
-                { icon: <OneIcon />,        title: 'Coinbase One',     desc: 'Get zero trading fees and more',                href: 'https://coinbase.com/one?referrer=logged_out' },
+                { icon: <AppIcon />,        title: 'Base App',         desc: 'Post, earn, trade, and chat, all in one place', href: '#' },
                 { icon: <DiamondIcon />,    title: 'Private Client',   desc: 'For trusts, family offices, UHNWIs',            href: '#' },
                 { icon: <ChainIcon />,      title: 'Onchain',          desc: 'Dive into the world of onchain apps',           href: '#' },
-                { icon: <LearnIcon />,      title: 'Learn',            desc: 'Crypto education and resources',                href: 'https://www.coinbase.com/learn' },
+                { icon: <LearnIcon />,      title: 'Learn',            desc: 'Crypto education and resources',                href: '/learn' },
             ],
             [
-                { icon: <AdvancedIcon />,   title: 'Advanced',         desc: 'Professional-grade trading tools',              href: 'https://www.coinbase.com/advanced-trade' },
+                { icon: <AdvancedIcon />,   title: 'Advanced',         desc: 'Professional-grade trading tools',              href: '#' },
                 { icon: <EarnIcon />,       title: 'Earn',             desc: 'Stake your crypto and earn rewards',            href: '#' },
                 { icon: <WealthIcon />,     title: 'Coinbase Wealth',  desc: 'Institutional-grade services for UHNW',         href: '#' },
                 { icon: <CreditCardIcon />, title: 'Credit Card',      desc: 'Earn up to 4% bitcoin back',                    href: '#' },
@@ -169,7 +169,7 @@ const MENUS = {
         ],
         featured: {
             image: <img src="https://static-assets.coinbase.com/growth/acquisition/global-nav/upsell/company_upsell.png" alt="About Coinbase" className="w-full h-full object-cover" />,
-            title: 'Learn all about Coinbase:',
+            title: 'Learn all about our platform:',
             description: "We're building the open financial system.",
             linkText: 'Create your account',
             href: '#',
@@ -184,7 +184,7 @@ const DropdownContent = ({ menuKey }) => {
     const menu = MENUS[menuKey];
     if (!menu) return null;
 
-    // Determine if columns use section headers (Institutions / Developers)
+    // Determining if columns use section headers (Institutions / Developers)
     const hasSectionHeaders = menu.cols.length > 0 && menu.cols[0]?.header !== undefined;
 
     return (
@@ -231,12 +231,20 @@ const DropdownContent = ({ menuKey }) => {
 
 /* ── Header ── */
 const Header = () => {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [activeMenu, setActiveMenu]   = useState(null);
     const [searchActive, setSearchActive] = useState(false);
     const [searchQuery, setSearchQuery]   = useState('');
     const [langOpen, setLangOpen]         = useState(false);
+    const [mobileOpen, setMobileOpen]     = useState(false);
     const leaveTimer = useRef(null);
     const searchInputRef = useRef(null);
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/');
+    };
 
     const handleEnter = (link) => {
         if (searchActive) return;
@@ -323,7 +331,7 @@ const Header = () => {
                         </div>
                     ) : (
                         <div className="flex items-center gap-2">
-                            {/* Search — Coinbase icon, gray bg */}
+                            
                             <button
                                 onClick={openSearch}
                                 className="hidden md:flex w-10 h-10 items-center justify-center rounded-full bg-gray-10 hover:bg-gray-15 transition-colors"
@@ -333,7 +341,7 @@ const Header = () => {
                                 </svg>
                             </button>
 
-                            {/* Globe — Coinbase icon, gray bg */}
+                            
                             <div className="relative">
                                 <button
                                     onClick={() => setLangOpen(v => !v)}
@@ -348,22 +356,48 @@ const Header = () => {
                                 </AnimatePresence>
                             </div>
 
-                            {/* Sign in — gray pill */}
-                            <Link
-                                to="/signin"
-                                className="hidden sm:flex items-center h-10 px-4 text-[0.875rem] font-semibold text-gray-100 bg-gray-10 hover:bg-gray-15 rounded-full transition-colors whitespace-nowrap"
-                            >
-                                Sign in
-                            </Link>
-                            <Link
-                                to="/account-type"
-                                className="inline-flex items-center justify-center rounded-pill font-semibold transition-all duration-200 bg-blue-60 text-white hover:opacity-90 px-4 py-2 text-label-1 whitespace-nowrap"
-                            >
-                                Sign up
-                            </Link>
+                            {/* Auth buttons — conditionally shown based on auth state */}
+                            {user ? (
+                                <>
+                                    <Link
+                                        to="/profile"
+                                        className="hidden sm:flex items-center gap-2 h-10 px-3 text-[0.875rem] font-semibold text-gray-100 bg-gray-10 hover:bg-gray-15 rounded-full transition-colors whitespace-nowrap"
+                                    >
+                                        <div className="w-6 h-6 rounded-full bg-blue-60 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                            {user.name?.[0]?.toUpperCase()}
+                                        </div>
+                                        <span className="hidden md:inline">{user.name}</span>
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="hidden sm:flex items-center h-10 px-4 text-[0.875rem] font-semibold text-gray-100 bg-gray-10 hover:bg-gray-15 rounded-full transition-colors whitespace-nowrap"
+                                    >
+                                        Sign out
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        to="/signin"
+                                        className="hidden sm:flex items-center h-10 px-4 text-[0.875rem] font-semibold text-gray-100 bg-gray-10 hover:bg-gray-15 rounded-full transition-colors whitespace-nowrap"
+                                    >
+                                        Sign in
+                                    </Link>
+                                    <Link
+                                        to="/account-type"
+                                        className="inline-flex items-center justify-center rounded-pill font-semibold transition-all duration-200 bg-blue-60 text-white hover:opacity-90 px-4 py-2 text-label-1 whitespace-nowrap"
+                                    >
+                                        Sign up
+                                    </Link>
+                                </>
+                            )}
 
-                            {/* Mobile hamburger — Coinbase icon */}
-                            <button className="lg:hidden flex w-10 h-10 items-center justify-center rounded-full bg-gray-10 hover:bg-gray-15 transition-colors">
+                            {/* Mobile hamburger */}
+                            <button
+                                 onClick={() => setMobileOpen(true)}
+                                 className="lg:hidden flex w-10 h-10 items-center justify-center rounded-full bg-gray-10 hover:bg-gray-15 transition-colors"
+                                 aria-label="Open menu"
+                             >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path fill="#0A0B0D" d="M3.989 3.995a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1.5 5.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m2.5-8.5h10v-2h-10zm0 4h10v-2h-10zm0 4h10v-2h-10z"/>
                                 </svg>
@@ -383,6 +417,107 @@ const Header = () => {
             {/* Search dropdown */}
             <AnimatePresence>
                 {searchActive && <SearchDropdown query={searchQuery} />}
+            </AnimatePresence>
+
+            {/* Mobile drawer */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <>
+                        <motion.div
+                            key="mob-backdrop"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="fixed inset-0 z-[60] bg-black/40"
+                            onClick={() => setMobileOpen(false)}
+                        />
+
+                        <motion.div
+                            key="mob-panel"
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'tween', duration: 0.26, ease: 'easeInOut' }}
+                            className="fixed top-0 right-0 bottom-0 z-[70] w-[85vw] max-w-xs bg-white shadow-2xl flex flex-col"
+                        >
+                            <div className="flex items-center justify-between px-5 h-16 border-b border-gray-10 shrink-0">
+                                <Link to="/" onClick={() => setMobileOpen(false)}>
+                                    <Logo height={24} />
+                                </Link>
+                                <button
+                                    onClick={() => setMobileOpen(false)}
+                                    className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-10 hover:bg-gray-15 transition-colors"
+                                    aria-label="Close menu"
+                                >
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <path stroke="#0A0B0D" strokeWidth="1.8" strokeLinecap="round" d="M1.5 1.5 10.5 10.5M10.5 1.5 1.5 10.5"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto px-4 py-4">
+                                {navLinks.map((section) => {
+                                    const menu = MENUS[section];
+                                    const items = menu
+                                        ? menu.cols.flatMap((col) =>
+                                              Array.isArray(col) ? col : (col.items ?? [])
+                                          )
+                                        : [];
+
+                                    return (
+                                        <div key={section} className="mb-5">
+                                            <p className="text-[0.6875rem] font-semibold text-gray-40 uppercase tracking-widest mb-1 px-2">
+                                                {section}
+                                            </p>
+                                            {items.length > 0 ? (
+                                                items.map((item) => (
+                                                    <a
+                                                        key={item.title}
+                                                        href={item.href}
+                                                        onClick={() => setMobileOpen(false)}
+                                                        className="flex items-center gap-3 px-2 py-2.5 rounded-lg hover:bg-gray-5 transition-colors"
+                                                    >
+                                                        <span className="text-gray-60 shrink-0">{item.icon}</span>
+                                                        <div className="min-w-0">
+                                                            <p className="text-[0.875rem] font-semibold text-gray-100 leading-snug">{item.title}</p>
+                                                            <p className="text-[0.75rem] text-gray-60 leading-snug truncate">{item.desc}</p>
+                                                        </div>
+                                                    </a>
+                                                ))
+                                            ) : (
+                                                <a
+                                                    href="#"
+                                                    onClick={() => setMobileOpen(false)}
+                                                    className="block px-2 py-2.5 text-[0.875rem] font-semibold text-gray-100 rounded-lg hover:bg-gray-5 transition-colors"
+                                                >
+                                                    {section}
+                                                </a>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="px-4 py-4 border-t border-gray-10 flex flex-col gap-3 shrink-0">
+                                <Link
+                                    to="/signin"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="flex items-center justify-center h-11 rounded-full bg-gray-10 hover:bg-gray-15 text-[0.875rem] font-semibold text-gray-100 transition-colors"
+                                >
+                                    Sign in
+                                </Link>
+                                <Link
+                                    to="/account-type"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="flex items-center justify-center h-11 rounded-full bg-blue-60 hover:opacity-90 text-[0.875rem] font-semibold text-white transition-opacity"
+                                >
+                                    Sign up
+                                </Link>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
             </AnimatePresence>
         </header>
     );

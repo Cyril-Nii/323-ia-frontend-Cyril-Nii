@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/common/Logo.jsx';
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
+import { useAuth } from '../context/AuthContext.jsx';
+import { apiLogin } from '../services/api.js';
 
 /* ── Icons ── */
 const PasskeyIcon = () => (
@@ -55,12 +57,15 @@ const UserAvatar = () => (
 
 const SignIn = () => {
 
-    useDocumentTitle('Coinbase - Sign in');
+    useDocumentTitle('Crypto App - Sign in');
 
+    const { login } = useAuth();
     const [step, setStep] = useState('email'); // 'email' | 'password'
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleEmailContinue = (e) => {
@@ -68,27 +73,41 @@ const SignIn = () => {
         if (email.trim()) setStep('password');
     };
 
-    const handlePasswordContinue = (e) => {
+    const handlePasswordContinue = async (e) => {
         e.preventDefault();
-        navigate('/', { state: { signedIn: true, email } });
+        setError('');
+        setLoading(true);
+        try {
+            const data = await apiLogin(email, password);
+            login(data.user);
+            navigate('/');
+        } catch (err) {
+            setError(err.message || 'Sign in failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <div className="min-h-screen bg-gray-100 flex flex-col overflow-y-auto">
             {/* Top bar with logo */}
-            <div className="px-6 pt-5">
+            <div className="px-6 pt-5 shrink-0">
                 <a href="/">
                     <Logo height={28} className="brightness-0 invert" />
                 </a>
             </div>
 
             {/* Centered form */}
-            <div className="flex-1 flex items-center justify-center px-4">
-                <div className="w-full max-w-97.5">
+            <div className="flex-1 flex items-center justify-center px-4 py-8">
+                <div className="w-full max-w-sm">
 
                     {step === 'email' && (
                         <form onSubmit={handleEmailContinue}>
-                            <h1 className="text-[1.75rem] font-bold text-white mb-6">Sign in to Coinbase</h1>
+                            <h1 className="text-[1.75rem] font-bold text-white mb-3">Sign in</h1>
+                            {/* Demo note */}
+                            <p className="text-[0.8125rem] text-amber-400 bg-amber-950/40 border border-amber-700/40 rounded-lg px-3 py-2 mb-5">
+                                Demo app – do not use your real password.
+                            </p>
 
                             {/* Email field */}
                             <div className="mb-4">
@@ -151,7 +170,11 @@ const SignIn = () => {
 
                     {step === 'password' && (
                         <form onSubmit={handlePasswordContinue}>
-                            <h1 className="text-[1.75rem] font-bold text-white mb-6">Sign in to Coinbase</h1>
+                            <h1 className="text-[1.75rem] font-bold text-white mb-3">Sign in</h1>
+                            {/* Demo note */}
+                            <p className="text-[0.8125rem] text-amber-400 bg-amber-950/40 border border-amber-700/40 rounded-lg px-3 py-2 mb-5">
+                                Demo app – do not use your real password.
+                            </p>
 
                             {/* Email display pill */}
                             <div className="flex items-center gap-3 w-full h-16 px-4 rounded-xl border border-[#2C2F36] bg-gray-90 mb-6">
@@ -179,13 +202,18 @@ const SignIn = () => {
                                 </div>
                             </div>
 
+                            {/* API error */}
+                            {error && (
+                                <p className="text-red-400 text-sm mb-3">{error}</p>
+                            )}
 
                             {/* Continue button */}
                             <button
                                 type="submit"
-                                className="w-full h-14 rounded-full bg-[#3B4DE0] hover:bg-[#2F3FC0] active:bg-[#2535A0] text-white font-semibold text-[0.9375rem] transition-colors"
+                                disabled={loading || !password}
+                                className="w-full h-14 rounded-full bg-[#3B4DE0] hover:bg-[#2F3FC0] active:bg-[#2535A0] disabled:opacity-50 text-white font-semibold text-[0.9375rem] transition-colors"
                             >
-                                Continue
+                                {loading ? 'Signing in…' : 'Continue'}
                             </button>
                         </form>
                     )}

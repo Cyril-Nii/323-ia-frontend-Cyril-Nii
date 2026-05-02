@@ -6,7 +6,7 @@ import Logo from '../common/Logo';
 
 const BaseAppSection = () => {
     return (
-        <section className="py-16 md:py-24 ">
+        <section className="py-10 md:py-24">
             <Container>
                 <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
                     {/* Right: Text (appears first on desktop via reverse) */}

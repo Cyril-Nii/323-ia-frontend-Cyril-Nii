@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TakeControlSection = () => {
     const [email, setEmail] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const target = `https://www.coinbase.com/signup${email ? `?email=${encodeURIComponent(email)}` : ''}`;
-        window.open(target, '_blank', 'noopener,noreferrer');
+        navigate(`/signup${email ? `?email=${encodeURIComponent(email)}` : ''}`);
     };
 
     return (

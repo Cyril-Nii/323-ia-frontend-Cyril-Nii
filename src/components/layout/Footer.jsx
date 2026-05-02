@@ -40,7 +40,7 @@ const Footer = () => {
 
     return (
         <footer className="flex flex-col items-center bg-gray-10 w-full">
-            <div className="w-full max-w-400 pt-12 pb-8 md:px-8 md:pt-16 md:max-w-307 lg:px-12 lg:pt-20 lg:max-w-400">
+            <div className="w-full max-w-400 px-4 pt-12 pb-8 md:px-8 md:pt-16 md:max-w-307 lg:px-12 lg:pt-20 lg:max-w-400">
 
                 {/* Logo — mobile only */}
                 <div className="mb-8 lg:hidden">

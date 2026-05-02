@@ -18,12 +18,12 @@ const HeroSection = () => {
     };
 
     return (
-        <section className="py-12 md:py-20 bg-white">
+        <section className="py-10 md:py-20 bg-white">
             <Container>
-                <div className="flex flex-col md:flex-row items-center gap-5 md:gap-16">
-                    {/* Left: App Screenshot — 50% on desktop, 1:1 aspect ratio */}
+                <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16">
+                    {/* Left: App Screenshot */}
                     <div className="w-full md:w-1/2 md:flex-[0_0_50%]">
-                        <div className="mx-auto md:mx-0 overflow-hidden rounded-[40px]">
+                        <div className="mx-auto md:mx-0 overflow-hidden rounded-[32px] max-h-[340px] sm:max-h-none">
                             <picture>
                                 <source
                                     srcSet="https://images.ctfassets.net/o10es7wu5gm1/4lbSrfvF333XkPz7WycixQ/afbeefb68eab9405594b2e9bfbb9a152/Hero__4_.png?fm=avif&w=1800&h=1800&q=65"
@@ -35,7 +35,7 @@ const HeroSection = () => {
                                 />
                                 <img
                                     src="https://images.ctfassets.net/o10es7wu5gm1/4lbSrfvF333XkPz7WycixQ/afbeefb68eab9405594b2e9bfbb9a152/Hero__4_.png"
-                                    alt="Coinbase"
+                                    alt="Crypto app"
                                     loading="eager"
                                     width="1800"
                                     height="1800"
@@ -48,9 +48,9 @@ const HeroSection = () => {
                         </p>
                     </div>
 
-                    {/* Right: CTA — 50% on desktop */}
+                    {/* Right: CTA */}
                     <div className="w-full md:w-1/2 md:flex-[0_0_50%]">
-                        <h1 className="text-5xl md:text-display-1 text-gray-100 mb-4">
+                        <h1 className="text-display-1 text-gray-100 mb-4">
                             The future of finance is here.
                         </h1>
                         <p className="text-body text-gray-60 mb-8">

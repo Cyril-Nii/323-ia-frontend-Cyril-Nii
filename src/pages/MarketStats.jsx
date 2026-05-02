@@ -7,23 +7,23 @@ import { MARKET_STATS_METRICS, MARKET_STATS_ASSET_LISTS } from '../data/marketSt
 const AssetListItem = ({ name, symbol, price, change, iconColor }) => {
     return (
         <div className="flex items-center justify-between py-3">
-            <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-full ${iconColor} flex items-center justify-center text-white font-bold text-xs`}>
+            <div className="flex items-center gap-3 min-w-0">
+                <div className={`w-8 h-8 rounded-full ${iconColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
                     {symbol[0]}
                 </div>
-                <div>
-                    <h4 className="font-medium text-gray-100">{name}</h4>
+                <div className="min-w-0">
+                    <h4 className="font-medium text-gray-100 truncate">{name}</h4>
                     <p className="text-gray-60 text-sm">{symbol}</p>
                 </div>
             </div>
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-3 shrink-0 ml-2">
                 <div className="text-right">
-                    <p className="font-medium text-gray-100">GHS {price.toLocaleString()}</p>
+                    <p className="font-medium text-gray-100 text-sm">GHS {price.toLocaleString()}</p>
                     <div className="flex justify-end mt-0.5">
-                        <ChangeIndicator value={change} className="text-[16px] font-medium" />
+                        <ChangeIndicator value={change} className="text-[14px] font-medium" />
                     </div>
                 </div>
-                <button className="bg-blue-60 hover:bg-[#0045D8] transition-colors text-white font-medium px-4 py-2 rounded-full text-sm">
+                <button className="hidden sm:block bg-blue-60 hover:bg-[#0045D8] transition-colors text-white font-medium px-3 py-1.5 rounded-full text-xs">
                     Trade
                 </button>
             </div>
@@ -32,7 +32,7 @@ const AssetListItem = ({ name, symbol, price, change, iconColor }) => {
 };
 
 const TopAssetsList = ({ title, assets = [] }) => (
-    <div className="flex flex-col h-full pl-8">
+    <div className="flex flex-col h-full">
         <h3 className="text-[17px] font-semibold text-gray-100 mb-6">{title}</h3>
         <div className="flex flex-col gap-2">
             {assets.map((asset) => (
@@ -112,22 +112,22 @@ const MarketStats = () => {
 
     const MetricRow = ({ title, description, value, change, isPositive, listTitle, assets = [] }) => (
         <div className="border-b border-gray-10 last:border-0 hover:bg-gray-5/30 transition-colors">
-            <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 min-h-[300px]">
-                {/* Left Column (Info) */}
-                <div className="col-span-1 md:col-span-3 py-10 pr-8 border-r border-gray-10">
-                    <h2 className="text-2xl font-bold mb-4">{title}</h2>
+            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12">
+                {/* Info panel */}
+                <div className="col-span-1 lg:col-span-3 py-6 lg:py-10 lg:pr-8 lg:border-r border-gray-10">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-3">{title}</h2>
                     <p className="text-gray-100 text-sm leading-relaxed">{description}</p>
                 </div>
 
-                {/* Middle Column (Chart & Controls) */}
-                <div className="col-span-1 md:col-span-6 py-10 px-8 border-r border-gray-10 flex flex-col justify-between">
+                {/* Chart panel */}
+                <div className="col-span-1 lg:col-span-6 py-6 lg:py-10 lg:px-8 border-t lg:border-t-0 lg:border-r border-gray-10 flex flex-col justify-between">
                     <div>
                         <div className="flex justify-between items-start">
                             <div className="flex items-center gap-1 bg-gray-5 rounded-lg p-1">
                                 {['1H', '1D', '1W', '1M', '1Y', 'ALL'].map((time) => (
                                     <button
                                         key={time}
-                                        className={`px-3 py-1 text-xs font-medium rounded-md ${time === '1D' ? 'bg-gray-10 text-gray-100' : 'text-gray-60 hover:text-gray-100'}`}
+                                        className={`px-2 sm:px-3 py-1 text-xs font-medium rounded-md ${time === '1D' ? 'bg-gray-10 text-gray-100' : 'text-gray-60 hover:text-gray-100'}`}
                                     >
                                         {time}
                                     </button>
@@ -135,8 +135,8 @@ const MarketStats = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8">
-                            <h1 className="text-[40px] leading-tight font-medium text-gray-100">
+                        <div className="mt-6">
+                            <h1 className="text-[28px] sm:text-[40px] leading-tight font-medium text-gray-100">
                                 {value}
                             </h1>
                             <div className="mt-1">
@@ -145,12 +145,11 @@ const MarketStats = () => {
                         </div>
                     </div>
 
-                    {/* Render the SVG block here */}
                     <ChartSvgBlock isRed={!isPositive} />
                 </div>
 
-                {/* Right Column (List) */}
-                <div className="col-span-1 md:col-span-3 py-10 pl-4">
+                {/* Asset list panel */}
+                <div className="col-span-1 lg:col-span-3 py-6 lg:py-10 lg:pl-4 border-t lg:border-t-0 border-gray-10">
                     <TopAssetsList title={listTitle} assets={assets} />
                 </div>
             </div>

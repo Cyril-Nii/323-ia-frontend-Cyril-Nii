@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/common/Logo.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { apiRegister } from '../services/api.js';
 import {
     SignUpShell,
     BlueButton,
@@ -165,15 +167,44 @@ const AllSetStep = ({ onContinue }) => (
     </div>
 );
 
-const StepEmail = ({ email, setEmail, onNext }) => (
+const StepEmail = ({ name, setName, email, setEmail, password, setPassword, error, onNext }) => {
+    const [showPw, setShowPw] = useState(false);
+    return (
     <SignUpShell>
-        <form onSubmit={(e) => { e.preventDefault(); if (email.trim()) onNext(); }}>
+        <form onSubmit={(e) => { e.preventDefault(); if (email.trim() && password.length >= 8) onNext(); }}>
             <h1 className="text-[1.75rem] font-bold text-white mb-2">Create your account</h1>
-            <p className="text-[0.9375rem] text-[#8A919E] mb-6 leading-6">
-                Access all that Coinbase has to offer with a single account.
+            <p className="text-[0.9375rem] text-[#8A919E] mb-4 leading-6">
+                Access all that this app has to offer with a single account.
             </p>
-            <DarkInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email address" />
-            <BlueButton type="submit">Continue</BlueButton>
+            
+            <p className="text-[0.8125rem] text-amber-400 bg-amber-950/40 border border-amber-700/40 rounded-lg px-3 py-2 mb-5">
+                🔒 Demo app – do not use your real password.
+            </p>
+            <DarkInput label="Full Name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required />
+            <DarkInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email address" required />
+            <div className="mb-4">
+                <label className="block text-[0.875rem] font-semibold text-white mb-1.5">Password</label>
+                <div className="relative">
+                    <input
+                        type={showPw ? 'text' : 'password'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="At least 8 characters"
+                        className="w-full h-14 px-4 pr-12 rounded-xl bg-[#1E2025] border border-[#2C2F36] text-white placeholder:text-[#5B616E] text-[0.9375rem] outline-none focus:border-[#0052FF] transition-colors"
+                        minLength={8}
+                        required
+                    />
+                    <button type="button" onClick={() => setShowPw(v => !v)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[#5B616E] hover:text-white transition-colors text-xs">
+                        {showPw ? 'Hide' : 'Show'}
+                    </button>
+                </div>
+                {password && password.length < 8 && (
+                    <p className="text-red-400 text-xs mt-1">Password must be at least 8 characters.</p>
+                )}
+            </div>
+            {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
+            <BlueButton type="submit" disabled={!email.trim() || password.length < 8 || !name.trim()}>Continue</BlueButton>
 
             <div className="flex items-center gap-3 my-5">
                 <div className="flex-1 h-px bg-[#2C2F36]" />
@@ -201,7 +232,8 @@ const StepEmail = ({ email, setEmail, onNext }) => (
             </p>
         </form>
     </SignUpShell>
-);
+    );
+};
 
 const StepVerifyEmail = ({ email, onNext }) => {
     const [code, setCode] = useState(['', '', '', '', '', '']);
@@ -377,7 +409,7 @@ const StepCountry = ({ citizenship, setCitizenship, residence, setResidence, onN
         <form onSubmit={(e) => { e.preventDefault(); onNext(); }}>
             <h1 className="text-[1.75rem] font-bold text-white mb-2">Where are you from?</h1>
             <p className="text-[0.9375rem] text-[#8A919E] mb-6 leading-6">
-                Coinbase is <a href="#" className="underline text-white hover:text-[#0052FF]">legally required</a> to collect this information. If you&apos;re a citizen of more than one country, please pick one.
+                We are <a href="#" className="underline text-white hover:text-[#0052FF]">legally required</a> to collect this information. If you&apos;re a citizen of more than one country, please pick one.
             </p>
             <DarkSelect label="Citizenship" hint="As shown on your ID document" value={citizenship} onChange={(e) => setCitizenship(e.target.value)}>
                 <CountryOptions />
@@ -397,7 +429,7 @@ const StepBirth = ({ city, setCity, country, setCountry, onNext }) => (
         <form onSubmit={(e) => { e.preventDefault(); onNext(); }}>
             <h1 className="text-[1.75rem] font-bold text-white mb-2">Enter your place of birth</h1>
             <p className="text-[0.9375rem] text-[#8A919E] mb-6 leading-6">
-                Coinbase is legally required to collect this info.
+                Regulations require us to collect this info.
             </p>
             <DarkInput label="City of birth" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Accra" />
             <DarkSelect label="Country of birth" value={country} onChange={(e) => setCountry(e.target.value)}>
@@ -521,20 +553,39 @@ const StepVerifying = ({ onComplete }) => {
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [step, setStep] = useState(0);
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [registerError, setRegisterError] = useState('');
     const [citizenship, setCitizenship] = useState('GH');
     const [residence, setResidence] = useState('GH');
     const [birthCity, setBirthCity] = useState('');
     const [birthCountry, setBirthCountry] = useState('GH');
     const [addressFile, setAddressFile] = useState(null);
 
-    const next = () => setStep((s) => s + 1);
+    const next = async () => {
+        // Step 0 -> 1: call the register API before proceeding
+        if (step === 0) {
+            setRegisterError('');
+            try {
+                const data = await apiRegister(name, email, password);
+                login(data.user);
+                setStep((s) => s + 1);
+            } catch (err) {
+                setRegisterError(err.message || 'Registration failed. Please try again.');
+            }
+            return;
+        }
+        setStep((s) => s + 1);
+    };
+
     const back = () => setStep((s) => Math.max(0, s - 1));
-    const goHome = () => navigate('/', { state: { signedUp: true, email } });
+    const goHome = () => navigate('/');
 
     switch (step) {
-        case 0: return <StepEmail email={email} setEmail={setEmail} onNext={next} />;
+        case 0: return <StepEmail name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword} error={registerError} onNext={next} />;
         case 1: return <StepVerifyEmail email={email} onNext={next} />;
         case 2: return <StepAccountSetup onNext={next} />;
         case 3: return <StepEmailOptIn onNext={next} />;
