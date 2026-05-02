@@ -10,7 +10,7 @@ import TakeControlSection from '../components/sections/TakeControlSection.jsx';
 
 const Home = () => {
 
-    useDocumentTitle('Coinbase - Buy and Sell Bitcoin, Ethereum, and more with trust');
+    useDocumentTitle('Crypto App');
 
     return (
         <div className="min-h-screen flex flex-col">
