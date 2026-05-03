@@ -178,7 +178,7 @@ const StepEmail = ({ name, setName, email, setEmail, password, setPassword, erro
             </p>
             
             <p className="text-[0.8125rem] text-amber-400 bg-amber-950/40 border border-amber-700/40 rounded-lg px-3 py-2 mb-5">
-                🔒 Demo app – do not use your real password.
+                Demo app – do not use your real password.
             </p>
             <DarkInput label="Full Name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required />
             <DarkInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email address" required />
@@ -409,7 +409,7 @@ const StepCountry = ({ citizenship, setCitizenship, residence, setResidence, onN
         <form onSubmit={(e) => { e.preventDefault(); onNext(); }}>
             <h1 className="text-[1.75rem] font-bold text-white mb-2">Where are you from?</h1>
             <p className="text-[0.9375rem] text-[#8A919E] mb-6 leading-6">
-                We are <a href="#" className="underline text-white hover:text-[#0052FF]">legally required</a> to collect this information. If you&apos;re a citizen of more than one country, please pick one.
+                We are required to collect this information. If you&apos;re a citizen of more than one country, please pick one.
             </p>
             <DarkSelect label="Citizenship" hint="As shown on your ID document" value={citizenship} onChange={(e) => setCitizenship(e.target.value)}>
                 <CountryOptions />
