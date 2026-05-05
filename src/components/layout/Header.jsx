@@ -384,7 +384,7 @@ const Header = () => {
                                         Sign in
                                     </Link>
                                     <Link
-                                        to="/account-type"
+                                        to="/signup"
                                         className="inline-flex items-center justify-center rounded-pill font-semibold transition-all duration-200 bg-blue-60 text-white hover:opacity-90 px-4 py-2 text-label-1 whitespace-nowrap"
                                     >
                                         Sign up
@@ -508,7 +508,7 @@ const Header = () => {
                                     Sign in
                                 </Link>
                                 <Link
-                                    to="/account-type"
+                                    to="/signup"
                                     onClick={() => setMobileOpen(false)}
                                     className="flex items-center justify-center h-11 rounded-full bg-blue-60 hover:opacity-90 text-[0.875rem] font-semibold text-white transition-opacity"
                                 >

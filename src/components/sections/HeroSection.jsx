@@ -13,7 +13,7 @@ const HeroSection = () => {
         if (email.trim()) {
             navigate(`/signup?email=${encodeURIComponent(email.trim())}`);
         } else {
-            navigate('/account-type');
+            navigate('/signup');
         }
     };
 
