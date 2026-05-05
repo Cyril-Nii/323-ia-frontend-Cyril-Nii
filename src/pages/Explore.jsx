@@ -21,9 +21,7 @@ import {
     FALLBACK_PRICE_SEED,
 } from '../data/exploreData.js';
 
-/* ═══════════════════════════════════════════════
-	FILTER/SMALL ICONS
-	═══════════════════════════════════════════════ */
+
 function GlobeIcon() {
     return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>;
 }
@@ -78,10 +76,8 @@ const ASSET_FILTERS = ASSET_FILTER_OPTIONS.map((item) => {
     };
 });
 
-/* ═══════════════════════════════════════════════
-	CONSTANTS & DATA
-	═══════════════════════════════════════════════ */
 
+// CONSTANTS & DATA
 const fmtCompact = (val, currLabel) => {
     if (val == null) return '--';
     if (val >= 1e12) return `${currLabel} ${(val / 1e12).toFixed(2)}T`;
@@ -95,9 +91,7 @@ const fmtPrice = (val, currLabel) => {
     return `${currLabel} ${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };
 
-/* ═══════════════════════════════════════════════
-	SKELETON LOADERS
-	═══════════════════════════════════════════════ */
+
 const StatSkeleton = () => (
     <div className="flex-1 min-w-50 bg-white rounded-xl border border-gray-10 p-5 animate-pulse">
         <div className="w-24 h-3 bg-gray-10 rounded mb-3" />
@@ -119,9 +113,7 @@ const TableRowSkeleton = () => (
     </tr>
 );
 
-/* ═══════════════════════════════════════════════
-	MARKET STAT CARD
-	═══════════════════════════════════════════════ */
+
 const MarketStatCard = ({ label, value, change, statId }) => {
     const isNeg = (change ?? 0) < 0;
     return (
@@ -144,9 +136,7 @@ const MarketStatCard = ({ label, value, change, statId }) => {
     );
 };
 
-/* ═══════════════════════════════════════════════
-	TOP MOVER CARD
-	═══════════════════════════════════════════════ */
+// TOP MOVER CARD
 const TopMoverCard = ({ coin, currLabel }) => (
     <div className="flex flex-col items-center bg-white rounded-xl border border-gray-10 p-4 min-w-30 hover:shadow-elevation-1 transition-shadow duration-200 cursor-pointer">
         <img src={coin.image} alt={coin.symbol} className="w-10 h-10 rounded-full mb-2" />
@@ -156,9 +146,7 @@ const TopMoverCard = ({ coin, currLabel }) => (
     </div>
 );
 
-/* ═══════════════════════════════════════════════
-	NEW ON COINBASE CARD
-	═══════════════════════════════════════════════ */
+
 const NewCoinCard = ({ coin }) => (
     <div className="flex flex-col items-center bg-white rounded-xl border border-gray-10 p-4 min-w-35 hover:shadow-elevation-1 transition-shadow duration-200 cursor-pointer">
         <img src={coin.image} alt={coin.name} className="w-10 h-10 rounded-full mb-2" />
@@ -222,7 +210,6 @@ const TableLineChart = ({ changePct, coinId }) => {
     );
 };
 
-/* Coinbase-style market stat chart with line + dotted fill */
 const StatChart = ({ changePct, statId }) => {
     const { points, W, H } = generateSparklineData(changePct, statId, 240, 60);
     const isNeg = (changePct ?? 0) < 0;
@@ -241,9 +228,7 @@ const StatChart = ({ changePct, statId }) => {
     );
 };
 
-/* ═══════════════════════════════════════════════
-	MAIN EXPLORE PAGE
-	═══════════════════════════════════════════════ */
+//  MAIN EXPLORE PAGE
 const Explore = () => {
 
     useDocumentTitle('Cryptocurrency Prices, Charts, Daily Trends, Market Cap, Highlights and Analysis');
@@ -277,15 +262,15 @@ const Explore = () => {
 
 
     useEffect(() => {
-        // Initialize with fallback rates - no external API calls
+        
         fxRates.current = { ghs: FALLBACK_GHS };
     }, []);
 
 
     const fetchPrices = useCallback(async () => {
-        // Return fallback mock data structure derived from COIN_META (no external API calls)
+        // Return fallback mock data structure derived from COIN_META
         return COIN_META.map((meta, i) => {
-            // Deterministic mock values based on index to look realistic
+            
             const basePrice = FALLBACK_PRICE_SEED[i % FALLBACK_PRICE_SEED.length];
             const lastPrice = (basePrice * (1 + (Math.sin(i) * 0.05))).toFixed(4);
             const priceChangePercent = (Math.sin(i * 1.5) * 5).toFixed(2);
@@ -324,7 +309,7 @@ const Explore = () => {
             .sort((a, b) => b.market_cap - a.market_cap);
     }, [getRate]);
 
-    /* ── Initial load + polling ── */
+    /*  Initial load + polling  */
     useEffect(() => {
         let cancelled = false;
         (async () => {
@@ -344,13 +329,13 @@ const Explore = () => {
         return () => { cancelled = true; clearInterval(id); };
     }, [fetchPrices, buildCoins]);
 
-    /* ── Reset page when filters change ── */
+    /*  Reset page when filters change  */
     useEffect(() => { setCurrentPage(1); }, [assetFilter, timePeriod, currency, rowsPerPage, searchQuery]);
 
-    /* ── Get change value (we only have 24h from Binance) ── */
+    /*  Get change value (we only have 24h from Binance)  */
     const getCoinChange = (coin) => coin.price_change_percentage_24h ?? null;
 
-    /* ── Apply asset filter ── */
+    /*  Apply asset filter  */
     const applyAssetFilter = (list) => {
         switch (assetFilter) {
             case 'tradeable':
@@ -370,7 +355,7 @@ const Explore = () => {
         }
     };
 
-    /* ── Derived data ── */
+    /*  Derived data  */
     const topGainers = [...coins]
         .filter((c) => c.price_change_percentage_24h != null)
         .sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h)
@@ -417,7 +402,7 @@ const Explore = () => {
         setCurrentPage(1);
     };
 
-    /* ── Market stats (computed from our data) ── */
+    /*  Market stats (computed from our data)  */
     const totalMktCap = coins.reduce((s, c) => s + (c.market_cap || 0), 0);
     const totalVol = coins.reduce((s, c) => s + (c.total_volume || 0), 0);
     const btcCoin = coins.find((c) => c.symbol === 'BTC');
@@ -444,9 +429,6 @@ const Explore = () => {
         return [...new Set(pages)];
     };
 
-    /* ── Get display label for asset filter ── */
-    // Removed unused local label; FilterDropdown manages selected label from options.
-
     return (
         <div className="min-h-screen flex flex-col bg-white">
             <Header />
@@ -454,10 +436,10 @@ const Explore = () => {
                 <Container className="py-8 md:py-12">
                     <div className="flex flex-col lg:flex-row gap-8">
 
-                        {/* ═══ LEFT MAIN CONTENT ═══ */}
+                        {/* LEFT MAIN CONTENT  */}
                         <div className="flex-1 min-w-0">
 
-                            {/* ── Page Header ── */}
+                            {/*  Page Header  */}
                             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-gray-10 mb-8 mt-2">
                                 <div>
                                     <h1 className="text-[32px] font-bold leading-tight text-gray-100 flex items-center md:items-end flex-wrap gap-2 md:gap-3">
@@ -484,7 +466,7 @@ const Explore = () => {
                                 </div>
                             </div>
 
-                            {/* ── Market Stats ── */}
+                            {/*  Market Stats  */}
                             <section className="pb-8 border-b border-gray-10 mb-8">
                                 <div className="flex items-center justify-between mb-2">
                                     <h2 className="text-title-1 text-gray-100">Market stats</h2>
@@ -520,7 +502,7 @@ const Explore = () => {
                                 </div>
                             </section>
 
-                            {/* ── Crypto Market Prices ── */}
+                            {/*  Crypto Market Prices  */}
                             <section>
                                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-4">
                                     <div>
@@ -548,7 +530,7 @@ const Explore = () => {
                                     {showMorePrices ? 'Read less' : 'Read more'}
                                 </button>
 
-                                {/* ══ FUNCTIONAL FILTER DROPDOWNS ══ */}
+                                {/*  FILTER DROPDOWNS  */}
                                 <div className="flex gap-2 mb-6 mt-4 flex-wrap">
                                     {/* Asset filter */}
                                     <FilterDropdown
@@ -714,12 +696,12 @@ const Explore = () => {
                                 )}
                             </section>
 
-                            {/* ═══ CTA BANNER ═══ */}
+                            
                             <div className="bg-blue-60 mt-8 mb-8 rounded-xl overflow-hidden">
                                 <div className="py-8 md:py-12 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
                                     <div className="flex-1">
                                         <h2 className="text-3xl text-white mb-6 max-w-lg">
-                                            Create a Coinbase account to trade crypto. It's quick, easy, and secure.
+                                            Create an account to trade crypto. It's quick, easy, and secure.
                                         </h2>
                                         <Link to="/signup">
                                             <Button variant="outline" size="lg" className="bg-white text-gray-100 border-white hover:bg-gray-5">
@@ -739,10 +721,10 @@ const Explore = () => {
                             </div>
                         </div>
 
-                        {/* ═══ RIGHT SIDEBAR ═══ */}
+                        {/* RIGHT SIDEBAR*/}
                         <aside className="w-full lg:w-[320px] shrink-0 flex flex-col gap-6 lg:pl-8 lg:border-l lg:border-gray-10">
 
-                            {/* Get Started CTA */}
+                            {/* Get Started */}
                             <div className="bg-blue-60 rounded-2xl p-5 relative overflow-hidden min-h-[160px]">
                                 <div className="relative z-10 w-[65%] shrink-0">
                                     <h3 className="text-[17px] leading-6 font-semibold text-white mb-1">Get started</h3>
@@ -784,10 +766,10 @@ const Explore = () => {
                                 </div>
                             </div>
 
-                            {/* New on Coinbase */}
+                            
                             <div>
                                 <div className="flex items-center justify-between mb-3">
-                                    <h3 className="text-headline text-gray-100">New on Coinbase</h3>
+                                    <h3 className="text-headline text-gray-100">New on App</h3>
                                     <div className="flex gap-1">
                                         <button className="w-7 h-7 rounded-full border border-gray-20 flex items-center justify-center text-gray-60 hover:bg-gray-5 transition-colors"><ChevronLeft /></button>
                                         <button className="w-7 h-7 rounded-full border border-gray-20 flex items-center justify-center text-gray-60 hover:bg-gray-5 transition-colors"><ChevronRight /></button>
