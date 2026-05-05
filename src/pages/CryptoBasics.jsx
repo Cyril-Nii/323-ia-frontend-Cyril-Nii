@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import Header from '../components/layout/Header.jsx';
 import Footer from '../components/layout/Footer.jsx';
-import SubscribePopup from '../components/common/SubscribePopup.jsx';
 import LearnCard from '../components/cards/LearnCard.jsx';
 import { cryptoBasicsArticles } from '../data/cryptoBasicsArticles.js';
 
@@ -46,7 +45,6 @@ export default function CryptoBasicsPage() {
             </main>
 
             <Footer />
-            <SubscribePopup />
         </div>
     );
 }

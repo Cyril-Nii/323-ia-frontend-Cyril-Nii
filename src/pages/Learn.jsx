@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayCircle } from 'lucide-react';
 import Header from '../components/layout/Header.jsx';
 import Footer from '../components/layout/Footer.jsx';
-import SubscribePopup from '../components/common/SubscribePopup.jsx';
 import LearnCard from '../components/cards/LearnCard.jsx';
 import {
     popularArticles,
@@ -20,17 +19,6 @@ const Learn = () => {
 
     useDocumentTitle('Learn');
 
-    const [showPopup, setShowPopup] = useState(true);
-
-    // Lock scroll when popup is open
-    useEffect(() => {
-        if (showPopup) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-    }, [showPopup]);
-
     // Scroll to Top on Mount
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -39,8 +27,6 @@ const Learn = () => {
     return (
         <div className="min-h-screen flex flex-col bg-white">
             <Header />
-
-            {showPopup && <SubscribePopup onClose={() => setShowPopup(false)} />}
 
             <main className="flex-1 mt-18">
                 {/* Hero Section */}
