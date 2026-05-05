@@ -18,7 +18,7 @@ import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const Learn = () => {
 
-    useDocumentTitle('Coinbase Learn - Your crypto questions, answered');
+    useDocumentTitle('Learn');
 
     const [showPopup, setShowPopup] = useState(true);
 

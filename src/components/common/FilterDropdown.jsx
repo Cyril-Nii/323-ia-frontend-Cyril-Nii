@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-/* ── Icons ── */
+
 const ChevronDown = () => (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
 );
@@ -14,17 +14,6 @@ const SearchIcon = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
 );
 
-/**
- * FilterDropdown — Coinbase-style pill dropdown with optional icon, search, and selection.
- *
- * Props:
- * - label:       display text when nothing selected (e.g. "All assets")
- * - value:       currently selected value
- * - options:     [{ value, label, sublabel?, icon? }]
- * - onChange:    (value) => void
- * - searchable: boolean — adds search input at top
- * - icon:        optional leading icon element
- */
 const FilterDropdown = ({
                             label,
                             value,
