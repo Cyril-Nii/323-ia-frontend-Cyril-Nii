@@ -1,7 +1,7 @@
 export const popularArticles = [
     { title: 'What is cryptocurrency?', label: 'Beginner\'s Guide' },
     { title: 'How to earn crypto rewards', label: 'Getting Started' },
-    { title: 'How to add crypto to your Coinbase Wallet', label: 'Getting Started' },
+    { title: 'How to add crypto to your Wallet', label: 'Getting Started' },
     { title: 'Tax forms, explained: A guide to U.S. tax forms and crypto reports', label: 'Your crypto' },
     { title: 'Beginner\'s guide to dapps', label: 'Getting Started' },
     { title: 'Everything you need to know about the first-ever U.S. Bitcoin ETF', label: 'Market Update' }
@@ -166,7 +166,7 @@ export const futures = [
 export const allThingsWallet = [
     {
         label: "Wallet",
-        title: "What's the difference between Coinbase and Coinbase Wallet?",
+        title: "What's the difference between the app and its Wallet?",
         description: "And how can a wallet help me access NFTs or DeFi? Your self-custody wallet questions, answered",
         image: "https://images.ctfassets.net/q5ulk4bp65r7/3mfq3iIdYW3CDfWoh5vm9j/e79252903418650aa29f66ee313ef44e/How_to_Coinbase_Wallet_Op1-B.png?w=768&fm=png",
         href: "#"
@@ -180,15 +180,14 @@ export const allThingsWallet = [
     },
     {
         label: "Getting Started",
-        title: "How to add crypto to your Coinbase Wallet",
-        description: "A quick guide on how to add crypto to your Coinbase self-custody wallet.",
+        title: "How to add crypto to your Wallet",
+        description: "A quick guide on how to add crypto to your self-custody wallet.",
         image: "https://images.ctfassets.net/q5ulk4bp65r7/3G50jPNvtkBsSz7we9TaxK/a50e3a2103bad2af0355644349e57476/how_to_fund_coinbase_wallet.png?w=768&fm=png",
         href: "#"
     },
     {
         label: "Wallet",
-        title: "How to send or receive crypto using Coinbase Wallet",
-        description: "Coinbase Wallet helps you unlock one of the most significant features of crypto: the ability to send or receive peer-to-peer transfers without any financial intermediaries.",
+        description: "Wallet helps you unlock one of the most significant features of crypto: the ability to send or receive peer-to-peer transfers without any financial intermediaries.",
         image: "https://images.ctfassets.net/q5ulk4bp65r7/4ktmMla57tgU3ZYleBOlLm/71ef298196ffcf1d1eb6d2b43abe49d4/Learn_Illustration_How_to_Send_Crypto.png?w=768&fm=png",
         href: "#"
     }
@@ -209,7 +208,7 @@ export const learnSectionArticles = [
         href: '#',
         title: 'USDC: The digital dollar for the global crypto economy',
         description:
-            'Coinbase believes crypto will be part of the solution for creating an open financial system that is both more efficient and more equitable. We co-founded the Centre Consortium in 2018 to invest in the build of USDC, and since then it has become the second largest stablecoin by market capitalization.',
+            'We believe crypto will be part of the solution for creating an open financial system that is both more efficient and more equitable. We co-founded the Centre Consortium in 2018 to invest in the build of USDC, and since then it has become the second largest stablecoin by market capitalization.',
         image:
             'https://images.ctfassets.net/o10es7wu5gm1/2tI0D7cX30gXudggzQc3tr/b6181107533f98f9dcc64da96efacff8/0_4mVyVaU6yLa--GR_',
         alt: 'Blue circle with USDC money symbol',
