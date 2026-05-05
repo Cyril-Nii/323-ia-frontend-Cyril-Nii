@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { AnimatePresence } from 'motion/react';
 import GlobalPreferencesModal from '../common/GlobalPreferencesModal.jsx';
-import { FOOTER_COLUMNS, FOOTER_SOCIALS } from '../../data/footerData.js';
+import { FOOTER_COLUMNS } from '../../data/footerData.js';
 
-/* ── Sub-components ── */
 const FooterSection = ({ title, links }) => (
     <div className="flex flex-col gap-3">
         <span className="text-[0.875rem] leading-5 font-semibold text-gray-100">{title}</span>
@@ -23,15 +22,6 @@ const FooterSection = ({ title, links }) => (
     </div>
 );
 
-const CoinbaseLogo = ({ height = 60 }) => (
-    <img
-        src="https://static-assets.coinbase.com/ui-infra/illustration/v1/pictogram/svg/light/coinbaseLogoNavigation-4.svg"
-        alt="Coinbase"
-        height={height}
-        style={{ height: `${height}px`, width: 'auto', display: 'block' }}
-    />
-);
-
 /* ── Footer ── */
 const Footer = () => {
     const [modalOpen, setModalOpen]   = useState(false);
@@ -42,17 +32,8 @@ const Footer = () => {
         <footer className="flex flex-col items-center bg-gray-10 w-full">
             <div className="w-full max-w-400 px-4 pt-12 pb-8 md:px-8 md:pt-16 md:max-w-307 lg:px-12 lg:pt-20 lg:max-w-400">
 
-                {/* Logo — mobile only */}
-                <div className="mb-8 lg:hidden">
-                    <CoinbaseLogo />
-                </div>
-
                 {/* Main columns row */}
                 <div className="flex flex-col lg:flex-row gap-10">
-                    {/* Logo column — desktop only */}
-                    <div className="hidden lg:flex flex-col shrink-0 w-18 pt-0.5">
-                        <CoinbaseLogo />
-                    </div>
 
                     {/* 4 content columns */}
                     {FOOTER_COLUMNS.map((col) => (
@@ -66,33 +47,13 @@ const Footer = () => {
 
                 {/* Bottom area */}
                 <div className="flex flex-col gap-4 mt-12">
-                    {/* Social icons */}
-                    <div className="flex items-center gap-4">
-                        {FOOTER_SOCIALS.map((s) => (
-                            <a
-                                key={s.label}
-                                href={s.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title={`Coinbase ${s.label} page`}
-                                className="opacity-100 hover:opacity-70 transition-opacity duration-150"
-                            >
-                                <img src={s.icon} alt={`${s.label} logo`} width={16} height={16} loading="lazy" />
-                            </a>
-                        ))}
-                    </div>
-
+                    
                     {/* Divider */}
                     <hr className="w-full border-0 border-t border-gray-15 my-2" />
 
-                    {/* Copyright + legal + locale row */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        {/* Left: copyright + legal links */}
+                        
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <p className="text-[0.8125rem] leading-5 text-gray-100 m-0">
-                                © {new Date().getFullYear()} Coinbase
-                            </p>
-                            <span className="text-gray-40 text-[0.8125rem]">•</span>
                             <a href="#" className="text-[0.8125rem] leading-5 text-gray-60 hover:text-gray-100 transition-colors">
                                 Privacy
                             </a>
