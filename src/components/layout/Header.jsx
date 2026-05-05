@@ -16,7 +16,6 @@ const Icon = ({ children }) => (
 );
 const BuySellIcon      = () => <Icon><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></Icon>;
 const AppIcon          = () => <Icon><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></Icon>;
-const OneIcon          = () => <Icon><circle cx="12" cy="12" r="9"/><path d="M12 8v8"/></Icon>;
 const DiamondIcon      = () => <Icon><path d="M12 2L2 8l10 14L22 8z"/></Icon>;
 const ChainIcon        = () => <Icon><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></Icon>;
 const LearnIcon        = () => <Icon><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></Icon>;
@@ -61,38 +60,24 @@ const MENUS = {
             [
                 { icon: <AdvancedIcon />,   title: 'Advanced',         desc: 'Professional-grade trading tools',              href: '#' },
                 { icon: <EarnIcon />,       title: 'Earn',             desc: 'Stake your crypto and earn rewards',            href: '#' },
-                { icon: <WealthIcon />,     title: 'Coinbase Wealth',  desc: 'Institutional-grade services for UHNW',         href: '#' },
+                { icon: <WealthIcon />,     title: 'Wealth',  desc: 'Institutional-grade services for UHNW',         href: '#' },
                 { icon: <CreditCardIcon />, title: 'Credit Card',      desc: 'Earn up to 4% bitcoin back',                    href: '#' },
                 { icon: <WalletIcon />,     title: 'Debit Card',       desc: 'Spend crypto, get crypto back',                 href: '#' },
             ],
-        ],
-        featured: {
-            image: <img src="https://static-assets.coinbase.com/marketing/2025-q4-event/navigation-upsell.png" alt="System Update 2025" className="w-full h-full object-cover" />,
-            title: 'System Update 2025',
-            description: 'The next chapter of Coinbase. Live on X 12/17.',
-            linkText: 'Learn more',
-            href: '#',
-        },
+        ]
     },
 
     Businesses: {
         cols: [
             [
                 { icon: <BusinessIcon />,  title: 'Business',        desc: 'Crypto trading and payments for startups and SMBs',          href: '#' },
-                { icon: <ListingsIcon />,  title: 'Asset Listings',  desc: 'List your asset on Coinbase',                                 href: '#' },
+                { icon: <ListingsIcon />,  title: 'Asset Listings',  desc: 'List your asset on the platform',                                 href: '#' },
             ],
             [
                 { icon: <PaymentsIcon />,  title: 'Payments',        desc: 'The stablecoin payments stack for commerce platforms',        href: '#' },
                 { icon: <TokenIcon />,     title: 'Token Manager',   desc: 'The platform for token distributions, vesting, and lockups', href: '#' },
             ],
-        ],
-        featured: {
-            image: <img src="https://static-assets.coinbase.com/growth/acquisition/global-nav/onchain_payment_protocol.png" alt="Commerce Payments Protocol" className="w-full h-full object-cover" />,
-            title: 'Commerce Payments Protocol',
-            description: 'A new standard for onchain payments.',
-            linkText: 'Go to Payments',
-            href: '#',
-        },
+        ]
     },
 
     Institutions: {
@@ -115,25 +100,18 @@ const MENUS = {
                     { icon: <PoolsIcon />,       title: 'Verified Pools',        desc: 'Transparent, verified liquidity pools',              href: '#' },
                 ],
             },
-        ],
-        featured: {
-            image: <img src="https://static-assets.coinbase.com/growth/acquisition/global-nav/upsell/institutions_upsell.png" alt="Our clients" className="w-full h-full object-cover" />,
-            title: 'Our clients',
-            description: 'Trusted by institutions and government.',
-            linkText: 'Learn more',
-            href: '#',
-        },
+        ]
     },
 
     Developers: {
         cols: [
             {
-                header: { label: 'Coinbase Developer Platform', href: '#' },
+                header: { label: 'Developer Platform', href: '#' },
                 items: [
                     { icon: <EyeIcon />,      title: 'Payments', desc: 'Fast and global stablecoin payments with a single integration',         href: '#' },
                     { icon: <ChartBarIcon />, title: 'Trading',  desc: 'Launch crypto trading and custody for your users',                       href: '#' },
                     { icon: <WalletIcon />,   title: 'Wallets',  desc: 'Deploy customizable and scalable wallets for your business',             href: '#' },
-                    { icon: <EarnIcon />,     title: 'Stablecoins', desc: 'Access USDC and Coinbase Custom Stablecoins',                        href: '#' },
+                    { icon: <EarnIcon />,     title: 'Stablecoins', desc: 'Access USDC and Custom Stablecoins',                        href: '#' },
                 ],
             },
             {
@@ -144,14 +122,7 @@ const MENUS = {
                     { icon: <StartupIcon />, title: 'Startups',           desc: "Launch your business with the world's leader in crypto",                           href: '#' },
                 ],
             },
-        ],
-        featured: {
-            image: <img src="https://static-assets.coinbase.com/growth/acquisition/global-nav/upsell/developers_upsell_cdxv2_2.jpg" alt="Developer platform" className="w-full h-full object-cover" />,
-            title: 'World class crypto infrastructure.',
-            description: "Discover Coinbase's complete crypto-as-a-service platform.",
-            linkText: 'Learn more',
-            href: '#',
-        },
+        ]
     },
 
     Company: {
@@ -159,21 +130,14 @@ const MENUS = {
             [
                 { icon: <InfoIcon />,    title: 'About',      desc: 'Powering the crypto economy',        href: '#' },
                 { icon: <PeopleIcon />, title: 'Affiliates', desc: 'Help introduce the world to crypto', href: '#' },
-                { icon: <NewsIcon />,   title: 'Blog',       desc: 'Read the latest from Coinbase',      href: '#' },
+                { icon: <NewsIcon />,   title: 'Blog',       desc: 'Read the latest',      href: '#' },
             ],
             [
                 { icon: <CareersIcon />,  title: 'Careers',  desc: 'Work with us',                      href: '#' },
                 { icon: <SupportIcon />,  title: 'Support',  desc: 'Find answers to your questions',     href: '#' },
                 { icon: <SecurityIcon />, title: 'Security', desc: 'The most trusted & secure',          href: '#' },
             ],
-        ],
-        featured: {
-            image: <img src="https://static-assets.coinbase.com/growth/acquisition/global-nav/upsell/company_upsell.png" alt="About Coinbase" className="w-full h-full object-cover" />,
-            title: 'Learn all about our platform:',
-            description: "We're building the open financial system.",
-            linkText: 'Create your account',
-            href: '#',
-        },
+        ]
     },
 };
 
@@ -217,13 +181,6 @@ const DropdownContent = ({ menuKey }) => {
                         </div>
                     ))}
                 </div>
-
-                {/* Featured panel */}
-                {menu.featured && (
-                    <div className="shrink-0 border-l border-gray-10 pl-12">
-                        <NavFeatured {...menu.featured} />
-                    </div>
-                )}
             </div>
         </div>
     );
