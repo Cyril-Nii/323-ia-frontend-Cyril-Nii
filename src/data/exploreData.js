@@ -105,8 +105,6 @@ export const ROWS_OPTIONS = [
 ];
 
 export const EXPLORE_MARKET_COPY = {
-    indexSubtitle: 'Coinbase 50 Index is down',
-    indexChange: '1.23%',
     marketSummaryStart: 'The overall crypto market is',
     marketSummaryEnd: 'this week. As of today, the total crypto market capitalization is',
     marketSummaryTail: 'representing a 0.38% increase from last week.',

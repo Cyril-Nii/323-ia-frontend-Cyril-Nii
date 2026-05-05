@@ -445,10 +445,7 @@ const Explore = () => {
                                     <h1 className="text-[32px] font-bold leading-tight text-gray-100 flex items-center md:items-end flex-wrap gap-2 md:gap-3">
                                         Explore crypto
                                     </h1>
-                                    <p className="text-body text-gray-60 mt-1 flex items-center gap-1">
-                                        {EXPLORE_MARKET_COPY.indexSubtitle} <span className="text-red-60">↘ {EXPLORE_MARKET_COPY.indexChange}</span> (24hrs)
-                                        <svg className="w-4 h-4 text-gray-40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" /></svg>
-                                    </p>
+
                                 </div>
 
                                 {/* Search bar */}

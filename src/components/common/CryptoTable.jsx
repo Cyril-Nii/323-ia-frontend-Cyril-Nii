@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 
-const tabs = ['Tradable', 'Top gainers', 'New on Coinbase'];
+const tabs = ['Tradable', 'Top gainers', 'New on App'];
 const POLL_MS = 3000;
 const FALLBACK_GHS = 16.5;
 
@@ -286,7 +286,7 @@ const CryptoTable = () => {
                     .filter((c) => c.price_change_percentage_24h != null)
                     .sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h)
                     .slice(0, 6);
-            case 'New on Coinbase':
+            case 'New on App':
                 return allCoins.slice(14, 20);
             default:
                 return [];
